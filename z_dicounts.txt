@@ -1,0 +1,19 @@
+Product based discount
+----------------------
+Direct Trade Discount 
+	- flat discount on products
+	- Eg: MRP maybe 100, but sale price 80
+	
+Promotional Discounts
+	- discounts on promotional basis
+	- Eg: Maybe a new product is given at lesser price for some time
+	
+Quantity Based Discounts
+	- additional discount based on order quantity
+	- offers when bulk orders taken
+
+Category based discount
+-----------------------
+Seasonal Discounts
+	- discounts on products for any special occasion
+	- Eg: Offers on Christmas
