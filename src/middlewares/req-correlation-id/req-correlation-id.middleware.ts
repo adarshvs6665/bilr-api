@@ -19,9 +19,6 @@ export class ReqCorrelationIdMiddleware implements NestMiddleware {
     // Set the correlation ID in the response headers for downstream services
     res.setHeader('x-correlation-id', correlationId);
 
-    // Log the correlation ID
-    console.log(`Correlation ID: ${correlationId}`);
-
     // Call the next middleware or route handler
     next();
   }
