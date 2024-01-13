@@ -7,6 +7,7 @@ import {
 import { ILogger, LoggerOptions, LogLevel } from './types';
 import { Format } from 'logform';
 import { customFormat } from './cli-format';
+
 const logTransports = [new transports.Console()];
 
 export class Logger implements ILogger {
@@ -15,7 +16,6 @@ export class Logger implements ILogger {
 
   constructor(private readonly options: LoggerOptions) {
     this.level = options.logLevel ?? LogLevel.Debug;
-
     const format = this.getLoggerFormat();
     this.logger = createLogger({
       defaultMeta: {
@@ -34,7 +34,7 @@ export class Logger implements ILogger {
 
   public getLoggerFormat(): Format {
     const developmentFormats: Format[] = [
-      format.timestamp(),
+      format.timestamp({ format: 'DD/MM/YYYY HH:mm:ss:SSS' }),
       format.errors({ stack: true, cause: true }),
       customFormat(),
     ];
@@ -46,7 +46,7 @@ export class Logger implements ILogger {
     }
 
     const productionFormats: Format[] = [
-      format.timestamp(),
+      format.timestamp({ format: 'DD/MM/YYYY HH:mm:ss:SSS' }),
       format.errors({ stack: true, cause: true }),
       format.json(),
     ];
