@@ -1,6 +1,7 @@
 import { Inject, Injectable, LoggerService } from '@nestjs/common';
 import { BilrLoggerModulesOptions, BILR_LOGGER_MODULE_OPTIONS } from './lib';
 import { ILogger, Logger, LoggerOptions } from './lib';
+import { randomUUID } from 'node:crypto';
 
 @Injectable()
 export class BilrLogger implements LoggerService, ILogger {
@@ -20,6 +21,15 @@ export class BilrLogger implements LoggerService, ILogger {
     };
 
     this.logger = new Logger(this.loggerOptions);
+  }
+
+  private getCorrelationId(): string | undefined {
+    return randomUUID();
+  }
+
+  public attachCorrelationId(id = this.getCorrelationId()): string | undefined {
+    this.logger.setRequestId(id);
+    return id;
   }
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any

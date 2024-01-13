@@ -7,12 +7,14 @@ import {
 import { ILogger, LoggerOptions, LogLevel } from './types';
 import { Format } from 'logform';
 import { customFormat } from './cli-format';
+import { randomUUID } from 'crypto';
 
 const logTransports = [new transports.Console()];
 
 export class Logger implements ILogger {
   private logger: WindstonLogger;
   public level: LogLevel;
+  private requestId: string = randomUUID();
 
   constructor(private readonly options: LoggerOptions) {
     this.level = options.logLevel ?? LogLevel.Debug;
@@ -30,6 +32,10 @@ export class Logger implements ILogger {
       exceptionHandlers: logTransports,
       rejectionHandlers: logTransports,
     });
+  }
+
+  public setRequestId(id: string) {
+    this.requestId = id;
   }
 
   public getLoggerFormat(): Format {
@@ -55,8 +61,20 @@ export class Logger implements ILogger {
     }
 
     return this.options.isProduction
-      ? format.combine(...productionFormats)
-      : format.combine(...developmentFormats);
+      ? format.combine(
+          format((info) => {
+            info.requestId = this.requestId;
+            return info;
+          })(),
+          ...productionFormats,
+        )
+      : format.combine(
+          format((info) => {
+            info.requestId = this.requestId;
+            return info;
+          })(),
+          ...developmentFormats,
+        );
   }
 
   debug(message: string, params?: Record<string, unknown>): void {
