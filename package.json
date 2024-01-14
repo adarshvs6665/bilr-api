@@ -25,6 +25,7 @@
     "@nestjs/core": "^10.0.0",
     "@nestjs/platform-express": "^10.0.0",
     "dayjs": "^1.11.10",
+    "error-to-json": "^2.0.0",
     "logform": "^2.6.0",
     "reflect-metadata": "^0.1.13",
     "rxjs": "^7.8.1",
