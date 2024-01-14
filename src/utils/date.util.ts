@@ -8,7 +8,7 @@ export class DateUtil {
   }
 
   static todayString(): string {
-    return dayjs().utc().format('DD/MM/YYYY HH:mm:ss:SSS');
+    return dayjs().utc().format('DD/MM/YYYY, HH:mm:ss:SSS');
   }
 
   static dateAfter(days: number): Date {
