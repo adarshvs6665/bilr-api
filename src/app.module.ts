@@ -5,11 +5,18 @@ import { BilrLoggerModule } from '@bilr/logger';
 import { ReqLoggerMiddleware } from './middlewares/req-logger/req-logger.middleware';
 import { SERVICE_NAME } from './constants';
 import { ReqCorrelationIdMiddleware } from './middlewares/req-correlation-id/req-correlation-id.middleware';
+import { ConfigModule } from '@nestjs/config';
+import configuration from './config/configuration';
 
 @Module({
   imports: [
     BilrLoggerModule.forRoot({
       component: SERVICE_NAME,
+    }),
+    ConfigModule.forRoot({
+      load: [configuration],
+      isGlobal: true,
+      cache: true,
     }),
   ],
   controllers: [AppController],
